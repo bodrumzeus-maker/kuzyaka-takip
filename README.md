@@ -65,7 +65,7 @@ Tarayıcınızda [http://localhost:3000](http://localhost:3000) adresini açın.
 
 ## 📦 Kullanılan Teknolojiler
 
-- **Next.js 14** - React framework
+- **Next.js 15** - React framework
 - **Supabase** - Backend ve veritabanı
 - **TypeScript** - Tip güvenli JavaScript
 - **Tailwind CSS** - Styling
