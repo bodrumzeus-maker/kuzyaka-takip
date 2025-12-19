@@ -1,21 +1,43 @@
-import Link from "next/link";
+'use client'
+
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import Header from '@/components/Header'
+import { projelerService, iscilerService, malzemelerService, gorevlerService } from '@/lib/services'
 
 export default function Home() {
+  const [stats, setStats] = useState({
+    projeler: 0,
+    isciler: 0,
+    malzemeler: 0,
+    gorevler: 0
+  })
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    loadStats()
+  }, [])
+
+  async function loadStats() {
+    try {
+      setLoading(true)
+      const [projeler, isciler, malzemeler, gorevler] = await Promise.all([
+        projelerService.count().catch(() => 0),
+        iscilerService.count().catch(() => 0),
+        malzemelerService.count().catch(() => 0),
+        gorevlerService.count().catch(() => 0),
+      ])
+      setStats({ projeler, isciler, malzemeler, gorevler })
+    } catch (error) {
+      console.error('İstatistikler yüklenirken hata:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900">Şantiye Takip Sistemi</h1>
-            <nav className="flex gap-4">
-              <Link href="/" className="text-gray-600 hover:text-gray-900">
-                Ana Sayfa
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
@@ -68,19 +90,27 @@ export default function Home() {
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Hızlı İstatistikler</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">-</div>
+              <div className="text-3xl font-bold text-blue-600">
+                {loading ? '...' : stats.projeler}
+              </div>
               <div className="text-gray-600">Aktif Proje</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-green-600">-</div>
+              <div className="text-3xl font-bold text-green-600">
+                {loading ? '...' : stats.isciler}
+              </div>
               <div className="text-gray-600">İşçi</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-600">-</div>
+              <div className="text-3xl font-bold text-yellow-600">
+                {loading ? '...' : stats.malzemeler}
+              </div>
               <div className="text-gray-600">Malzeme</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600">-</div>
+              <div className="text-3xl font-bold text-purple-600">
+                {loading ? '...' : stats.gorevler}
+              </div>
               <div className="text-gray-600">Görev</div>
             </div>
           </div>
@@ -94,5 +124,5 @@ export default function Home() {
         </div>
       </footer>
     </div>
-  );
+  )
 }
