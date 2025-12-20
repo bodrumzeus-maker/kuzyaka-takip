@@ -14,17 +14,17 @@ export default function Header() {
             <Link href="/" className="text-gray-600 hover:text-gray-900 transition-colors">
               Ana Sayfa
             </Link>
-            <Link href="/projeler" className="text-gray-600 hover:text-gray-900 transition-colors">
-              Projeler
+            <Link href="/maliyet-kalemleri" className="text-gray-600 hover:text-gray-900 transition-colors">
+              Maliyet Kalemleri
             </Link>
-            <Link href="/isciler" className="text-gray-600 hover:text-gray-900 transition-colors">
-              İşçiler
+            <Link href="/odeme-plani" className="text-gray-600 hover:text-gray-900 transition-colors">
+              Ödeme Planı
             </Link>
-            <Link href="/malzemeler" className="text-gray-600 hover:text-gray-900 transition-colors">
-              Malzemeler
+            <Link href="/ilerleme-kayitlari" className="text-gray-600 hover:text-gray-900 transition-colors">
+              İlerleme Kayıtları
             </Link>
-            <Link href="/gorevler" className="text-gray-600 hover:text-gray-900 transition-colors">
-              Görevler
+            <Link href="/is-programi" className="text-gray-600 hover:text-gray-900 transition-colors">
+              İş Programı
             </Link>
           </nav>
         </div>

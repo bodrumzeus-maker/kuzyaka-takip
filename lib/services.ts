@@ -1,7 +1,7 @@
 import { SupabaseService } from './supabase-service'
-import { Proje, Isci, Malzeme, Gorev } from '@/types/database'
+import { CostItem, PaymentSchedule, ProgressLog, WorkSchedule } from '@/types/database'
 
-export const projelerService = new SupabaseService<Proje>('projeler')
-export const iscilerService = new SupabaseService<Isci>('isciler')
-export const malzemelerService = new SupabaseService<Malzeme>('malzemeler')
-export const gorevlerService = new SupabaseService<Gorev>('gorevler')
+export const costItemsService = new SupabaseService<CostItem>('cost_items_rows')
+export const paymentScheduleService = new SupabaseService<PaymentSchedule>('payment_schedule_rows')
+export const progressLogsService = new SupabaseService<ProgressLog>('progress_logs_rows')
+export const workScheduleService = new SupabaseService<WorkSchedule>('work_schedule_rows')

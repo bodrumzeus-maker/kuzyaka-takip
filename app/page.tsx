@@ -3,14 +3,14 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Header from '@/components/Header'
-import { projelerService, iscilerService, malzemelerService, gorevlerService } from '@/lib/services'
+import { costItemsService, paymentScheduleService, progressLogsService, workScheduleService } from '@/lib/services'
 
 export default function Home() {
   const [stats, setStats] = useState({
-    projeler: 0,
-    isciler: 0,
-    malzemeler: 0,
-    gorevler: 0
+    costItems: 0,
+    payments: 0,
+    progressLogs: 0,
+    workSchedules: 0
   })
   const [loading, setLoading] = useState(true)
 
@@ -21,13 +21,13 @@ export default function Home() {
   async function loadStats() {
     try {
       setLoading(true)
-      const [projeler, isciler, malzemeler, gorevler] = await Promise.all([
-        projelerService.count().catch(() => 0),
-        iscilerService.count().catch(() => 0),
-        malzemelerService.count().catch(() => 0),
-        gorevlerService.count().catch(() => 0),
+      const [costItems, payments, progressLogs, workSchedules] = await Promise.all([
+        costItemsService.count().catch(() => 0),
+        paymentScheduleService.count().catch(() => 0),
+        progressLogsService.count().catch(() => 0),
+        workScheduleService.count().catch(() => 0),
       ])
-      setStats({ projeler, isciler, malzemeler, gorevler })
+      setStats({ costItems, payments, progressLogs, workSchedules })
     } catch (error) {
       console.error('İstatistikler yüklenirken hata:', error)
     } finally {
@@ -46,41 +46,41 @@ export default function Home() {
             Hoş Geldiniz
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Şantiye projelerinizi, işçilerinizi, malzemelerinizi ve görevlerinizi tek bir yerden yönetin.
+            Şantiye projelerinizin maliyet, ödeme, ilerleme ve iş programı takibini tek bir yerden yönetin.
           </p>
         </div>
 
         {/* Feature Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Link href="/projeler" className="block">
+          <Link href="/maliyet-kalemleri" className="block">
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer">
-              <div className="text-4xl mb-4">🏗️</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Projeler</h3>
-              <p className="text-gray-600">Şantiye projelerinizi yönetin</p>
+              <div className="text-4xl mb-4">💰</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Maliyet Kalemleri</h3>
+              <p className="text-gray-600">İş kalemlerini ve maliyetlerini takip edin</p>
             </div>
           </Link>
 
-          <Link href="/isciler" className="block">
+          <Link href="/odeme-plani" className="block">
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer">
-              <div className="text-4xl mb-4">👷</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">İşçiler</h3>
-              <p className="text-gray-600">İşçi bilgilerini takip edin</p>
+              <div className="text-4xl mb-4">📅</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Ödeme Planı</h3>
+              <p className="text-gray-600">Hakediş ve ödeme takviminizi yönetin</p>
             </div>
           </Link>
 
-          <Link href="/malzemeler" className="block">
+          <Link href="/ilerleme-kayitlari" className="block">
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer">
-              <div className="text-4xl mb-4">🧱</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Malzemeler</h3>
-              <p className="text-gray-600">Malzeme envanterini yönetin</p>
+              <div className="text-4xl mb-4">📊</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">İlerleme Kayıtları</h3>
+              <p className="text-gray-600">Günlük iş ilerlemelerini kaydedin</p>
             </div>
           </Link>
 
-          <Link href="/gorevler" className="block">
+          <Link href="/is-programi" className="block">
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer">
               <div className="text-4xl mb-4">📋</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Görevler</h3>
-              <p className="text-gray-600">İş takibi ve planlama</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">İş Programı</h3>
+              <p className="text-gray-600">Haftalık iş planlamasını görüntüleyin</p>
             </div>
           </Link>
         </div>
@@ -91,27 +91,27 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-600">
-                {loading ? '...' : stats.projeler}
+                {loading ? '...' : stats.costItems}
               </div>
-              <div className="text-gray-600">Aktif Proje</div>
+              <div className="text-gray-600">Maliyet Kalemi</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-green-600">
-                {loading ? '...' : stats.isciler}
+                {loading ? '...' : stats.payments}
               </div>
-              <div className="text-gray-600">İşçi</div>
+              <div className="text-gray-600">Ödeme Planı</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-yellow-600">
-                {loading ? '...' : stats.malzemeler}
+                {loading ? '...' : stats.progressLogs}
               </div>
-              <div className="text-gray-600">Malzeme</div>
+              <div className="text-gray-600">İlerleme Kaydı</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-purple-600">
-                {loading ? '...' : stats.gorevler}
+                {loading ? '...' : stats.workSchedules}
               </div>
-              <div className="text-gray-600">Görev</div>
+              <div className="text-gray-600">İş Programı</div>
             </div>
           </div>
         </div>
