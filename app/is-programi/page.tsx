@@ -73,7 +73,7 @@ export default function IsProgramiPage() {
                   </div>
 
                   <div className="border-t pt-4">
-                    <div className="text-sm text-gray-600 mb-2 font-semibold">İş Haftalıarı:</div>
+                    <div className="text-sm text-gray-600 mb-2 font-semibold">İş Haftaları:</div>
                     <div className="flex flex-wrap gap-2">
                       {schedule.work_weeks.map((week, idx) => (
                         <span key={idx} className="px-3 py-1 bg-green-100 text-green-800 rounded-md text-sm">
